@@ -9,6 +9,8 @@ COPY id_rsa.pub /root/.ssh/authorized_keys
 
 COPY train.sh /usr/bin/train
 RUN chmod +x /usr/bin/train
+
+# This doesn't seem to be needed
 #RUN sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' -i /etc/pam.d/sshd
 
-EXPOSE 1234
+EXPOSE 22
