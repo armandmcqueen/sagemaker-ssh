@@ -78,13 +78,13 @@ def extract_ips(network_interfaces):
     return [n["PrivateIpAddress"] for n in network_interfaces]
 
 
-def describe_instance(c, ip):
+def describe_instance(c, ip, port):
     # print(ip)
-    resourceconfig = json.loads(c.run(f'ssh -o StrictHostKeyChecking=no -p 1234 root@{ip} cat /opt/ml/input/config/resourceconfig.json', hide=True).stdout)
+    resourceconfig = json.loads(c.run(f'ssh -o StrictHostKeyChecking=no -p {port} root@{ip} cat /opt/ml/input/config/resourceconfig.json', hide=True).stdout)
     current_host = resourceconfig["current_host"]
     all_hosts = resourceconfig["hosts"]
 
-    hyperparams = json.loads(c.run(f'ssh -o StrictHostKeyChecking=no -p 1234 root@{ip} cat /opt/ml/input/config/hyperparameters.json', hide=True).stdout)
+    hyperparams = json.loads(c.run(f'ssh -o StrictHostKeyChecking=no -p {port} root@{ip} cat /opt/ml/input/config/hyperparameters.json', hide=True).stdout)
     job_name = hyperparams["sagemaker_job_name"] if "sagemaker_job_name" in hyperparams.keys() else "Unknown Job Name"
 
     # print(resourceconfig)
@@ -115,7 +115,7 @@ def smssh(c, subnet, security_groups="", port=22, verbose=False):
     for ip in ips:
         if verbose:
             print(f'Retrieving details from {ip}')
-        description_array = describe_instance(c, ip)
+        description_array = describe_instance(c, ip, port=port)
         rows.append(description_array)
 
     rows = sorted(rows, key=lambda r: (r[0], r[1]))
