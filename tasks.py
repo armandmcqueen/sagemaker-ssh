@@ -31,8 +31,6 @@ def get_network_inferfaces(subnet):
 
 def filter_by_device_id(network_interfaces, device_id):
     def device_index_match(network_interface):
-        print(network_interface.keys())
-        print(network_interface["Attachment"].keys())
         return network_interface["Attachment"]["DeviceIndex"] == device_id
 
     matching_network_interfaces = [n for n in network_interfaces if device_index_match(n)]
@@ -56,8 +54,8 @@ def extract_ips(network_interfaces):
 
 def describe_instance(c, ip):
     print(ip)
-    resourceconfig = json.loads(c.run(f'ssh -p 1234 root@{ip} cat /opt/ml/input/config/resourceconfig.json', hide=True))
-    hyperparams = json.loads(c.run(f'ssh -p 1234 root@{ip} cat /opt/ml/input/config/resourceconfig.json', hide=True))
+    resourceconfig = json.loads(c.run(f'ssh -o StrictHostKeyChecking=no -p 1234 root@{ip} cat /opt/ml/input/config/resourceconfig.json', hide=True))
+    hyperparams = json.loads(c.run(f'ssh -o StrictHostKeyChecking=no -p 1234 root@{ip} cat /opt/ml/input/config/resourceconfig.json', hide=True))
     print(resourceconfig)
     print(hyperparams)
 
