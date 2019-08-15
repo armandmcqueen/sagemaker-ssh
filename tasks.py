@@ -38,6 +38,26 @@ def filter_by_device_id(network_interfaces, device_id):
     return matching_network_interfaces
 
 
+def filter_by_ssh_connectivity(network_interfaces, c, port=22, verbose=False):
+    if verbose:
+        print("Filtering by ssh connections now")
+
+    def ssh_succeeds(network_interface):
+        ip = network_interface["PrivateIpAddress"]
+        if verbose:
+            print(ip)
+        try:
+            hide = not verbose
+            c.run(f'ssh -o StrictHostKeyChecking=no -p {port} root@{ip} cat /opt/ml/input/config/resourceconfig.json', hide=hide)
+        except Exception as e:
+            print(type(e))
+            print(e)
+        return True
+
+    matching_network_interfaces = [n for n in network_interfaces if ssh_succeeds(n)]
+    return matching_network_interfaces
+
+
 def display_network_interfaces(network_interfaces):
     for n in network_interfaces:
         device_index = n["Attachment"]["DeviceIndex"]
@@ -69,7 +89,7 @@ def describe_instance(c, ip):
     
 
 @task()
-def smssh(c, subnet, security_groups="", verbose=False):
+def smssh(c, subnet, security_groups="", port=22, verbose=False):
     # subnet = "subnet-21ac2f2e"
     # security_groups = ["sg-0eaeb8cc84c955b74",
     #                    "sg-0043f63c9ad9ffc1d",
@@ -78,6 +98,7 @@ def smssh(c, subnet, security_groups="", verbose=False):
     network_interfaces = get_network_inferfaces(subnet)
     network_interfaces = filter_by_sgs(network_interfaces, security_groups)
     # network_interfaces = filter_by_device_id(network_interfaces, 2)
+    network_interfaces = filter_by_ssh_connectivity(network_interfaces, c, port=port, verbose=verbose)
     if verbose:
         print("Matching network interfaces:")
         display_network_interfaces(network_interfaces)
