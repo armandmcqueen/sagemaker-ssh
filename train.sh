@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
 
 echo "Starting ssh daemon"
-/usr/sbin/sshd -D
+/usr/sbin/sshd -p 22; sleep infinity
