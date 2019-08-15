@@ -2,3 +2,4 @@
 
 echo "Starting ssh daemon"
 /usr/sbin/sshd -p 1234; sleep infinity
+echo "Done with ssh daemon"
