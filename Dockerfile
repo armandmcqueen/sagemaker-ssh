@@ -1,4 +1,8 @@
-FROM nvidia/cuda:10.0-devel-ubuntu18.04
+FROM ubuntu:16.04
+# FROM nvidia/cuda:10.0-devel-ubuntu18.04
+
+RUN apt-get install -y --no-install-recommends openssh-client openssh-server && \
+    mkdir -p /var/run/sshd
 
 RUN mkdir -p /root/.ssh
 COPY id_rsa.pub /root/.ssh/authorized_keys
