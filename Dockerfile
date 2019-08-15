@@ -1,4 +1,4 @@
-FROM ubuntu:16.04
+FROM nvidia/cuda:10.0-devel-ubuntu18.04
 
 RUN mkdir -p /root/.ssh
 COPY id_rsa.pub /root/.ssh/authorized_keys
