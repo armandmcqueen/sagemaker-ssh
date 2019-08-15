@@ -1,6 +1,7 @@
 import boto3
 import json
 from invoke import task
+import tabulate
 
 
 
@@ -55,9 +56,15 @@ def extract_ips(network_interfaces):
 def describe_instance(c, ip):
     # print(ip)
     resourceconfig = json.loads(c.run(f'ssh -o StrictHostKeyChecking=no -p 1234 root@{ip} cat /opt/ml/input/config/resourceconfig.json', hide=True).stdout)
+    current_host = resourceconfig["current_host"]
+    all_hosts = resourceconfig["hosts"]
+
     hyperparams = json.loads(c.run(f'ssh -o StrictHostKeyChecking=no -p 1234 root@{ip} cat /opt/ml/input/config/hyperparameters.json', hide=True).stdout)
-    print(resourceconfig)
-    print(hyperparams)
+    job_name = hyperparams["sagemaker_job_name"] if "sagemaker_job_name" in hyperparams.keys() else "Unknown Job Name"
+
+    # print(resourceconfig)
+    # print(hyperparams)
+    return job_name, current_host, all_hosts
 
     
 
@@ -73,10 +80,14 @@ def smssh(c):
     display_network_interfaces(network_interfaces)
 
     ips = extract_ips(network_interfaces)
+    rows = []
     for ip in ips:
-        print(f'Trying ssh to {ip}')
-        describe_instance(c, ip)
-        print("")
+        # print(f'Trying ssh to {ip}')
+        description_array = describe_instance(c, ip)
+        rows.append(description_array)
+        # print("")
+    
+    print(tabulate.tabulate(rows))
 
         # try:
         #     c.run(f'ssh -p 1234 root@{ip} cat /opt/ml/input/config/resourceconfig.json')
