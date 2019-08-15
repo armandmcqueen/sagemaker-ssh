@@ -58,7 +58,8 @@ if __name__ == '__main__':
                           output_path=output_path,
                           subnets=[SUBNET],
                           security_group_ids=SG_IDS,
-                          input_mode='File')
+                          input_mode='File',
+                          hyperparameters={"sagemaker_job_name": job_name})
 
 
 

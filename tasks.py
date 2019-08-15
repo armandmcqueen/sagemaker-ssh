@@ -76,6 +76,7 @@ def smssh(c):
     for ip in ips:
         print(f'Trying ssh to {ip}')
         describe_instance(c, ip)
+        print("")
 
         # try:
         #     c.run(f'ssh -p 1234 root@{ip} cat /opt/ml/input/config/resourceconfig.json')
