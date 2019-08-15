@@ -49,7 +49,7 @@ if __name__ == '__main__':
                           base_job_name=f'armand-ssh-test',
                           role=SM_ROLE,
                           train_volume_size=100,
-                          train_instance_count=1,
+                          train_instance_count=2,
                           train_instance_type=INSTANCE_TYPE,
                           sagemaker_session=sess,
                           output_path=output_path,
