@@ -1,6 +1,6 @@
 FROM ubuntu:16.04
 # FROM nvidia/cuda:10.0-devel-ubuntu18.04
-
+RUN apt-get update -y
 RUN apt-get install -y --no-install-recommends openssh-client openssh-server && \
     mkdir -p /var/run/sshd
 
