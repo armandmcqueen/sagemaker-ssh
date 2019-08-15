@@ -105,18 +105,17 @@ def smssh(c, subnet, security_groups="", port=22, verbose=False):
     # network_interfaces = filter_by_device_id(network_interfaces, 2)
     network_interfaces = filter_by_ssh_connectivity(network_interfaces, c, port=port, verbose=verbose)
     if verbose:
-        print("Matching network interfaces:")
+        print("\nMatching network interfaces:")
         display_network_interfaces(network_interfaces)
 
     ips = extract_ips(network_interfaces)
     rows = []
+    print("")
     for ip in ips:
         if verbose:
-            print(f'Trying ssh to {ip}')
+            print(f'Retrieving details from {ip}')
         description_array = describe_instance(c, ip)
         rows.append(description_array)
-        if verbose:
-            print("")
 
     rows = sorted(rows, key=lambda r: (r[0], r[1]))
     header = ["Job Name", "Host Id", "Hosts in Training Job", "IP"]
