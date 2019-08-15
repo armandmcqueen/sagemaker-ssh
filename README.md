@@ -1,26 +1,10 @@
-# sagemaker-ssh
+# SSHing into SageMaker training jobs
 
-## Generate ssh creds
+1. Create keypair so that your ec2 instance can SSH int o the SageMaker container.
+2. Put public key in container. Make private key available to ssh on ec2 instance.
+3. Add a training job entrypoint into container that launches ssh daemon and waits.
+4. Launch training job with a subnet specified
 
-`
-ssh-keygen -q -t rsa -N '' -f id_rsa
-`
+Now when the SageMaker instances are spun up, each container will have a visible network interface.  
 
-Creates 
-
-```
-- id_rsa
-- id_rsa.pub
-```
-
-### In container
-
-Put `id_rsa.pub` into container as `/root/.ssh/authorized_keys`
-
-### In ec2 instance
-
-Put `id_rsa` into `~/.ssh/id_rsa`
-
-## Finding 
-
-
+ 
