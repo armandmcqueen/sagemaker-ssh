@@ -7,7 +7,7 @@ RUN apt-get update -y && \
 
 COPY id_rsa.pub /root/.ssh/authorized_keys
 
-COPY train.sh /usr/bin/train
+COPY train_entrypoint.sh /usr/bin/train
 RUN chmod +x /usr/bin/train
 
 EXPOSE 22

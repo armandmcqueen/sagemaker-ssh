@@ -89,8 +89,11 @@ def describe_instance(c, ip, port):
 
     
 
-@task()
-def smssh(c, subnet, security_groups="", port=22, verbose=False):
+@task(help={'subnet': "The subnet where the SageMaker job is running, e.g. 'sg-1234567890'.",
+            'security-groups': "The security groups attached to the SageMaker training job. A comma separated list, e.g. 'sg-123456,sg-234567'.",
+            'port': "The port that the ssh daemon is running on. Default is 22.",
+            'verbose': "Get detailed information about what is running. Very verbose."})
+def find_sm_ssh_ips(c, subnet, security_groups="", port=22, verbose=False):
     security_groups = security_groups.split(",")
     network_interfaces = get_network_inferfaces(subnet)
     network_interfaces = filter_by_sgs(network_interfaces, security_groups)
