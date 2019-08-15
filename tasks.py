@@ -69,11 +69,11 @@ def describe_instance(c, ip):
     
 
 @task()
-def smssh(c):
-    subnet = "subnet-21ac2f2e"
-    security_groups = ["sg-0eaeb8cc84c955b74",
-                       "sg-0043f63c9ad9ffc1d",
-                       "sg-0d931ecdaccd26af3"]
+def smssh(c, subnet, security_groups=()):
+    # subnet = "subnet-21ac2f2e"
+    # security_groups = ["sg-0eaeb8cc84c955b74",
+    #                    "sg-0043f63c9ad9ffc1d",
+    #                    "sg-0d931ecdaccd26af3"]
     network_interfaces = get_network_inferfaces(subnet)
     network_interfaces = filter_by_sgs(network_interfaces, security_groups)
     network_interfaces = filter_by_device_id(network_interfaces, 2)
