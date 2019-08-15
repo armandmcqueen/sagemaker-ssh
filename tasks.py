@@ -87,7 +87,7 @@ def smssh(c):
         rows.append(description_array)
         # print("")
 
-    rows = sorted(rows, key=lambda r: r[0], r[1])
+    rows = sorted(rows, key=lambda r: (r[0], r[1]))
     print(tabulate.tabulate(rows))
 
         # try:
