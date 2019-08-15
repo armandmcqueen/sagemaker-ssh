@@ -49,9 +49,13 @@ def filter_by_ssh_connectivity(network_interfaces, c, port=22, verbose=False):
         try:
             hide = not verbose
             c.run(f'ssh -o StrictHostKeyChecking=no -p {port} root@{ip} cat /opt/ml/input/config/resourceconfig.json', hide=hide)
+            if verbose:
+                print("Succeeded")
         except Exception as e:
-            print(type(e))
-            print(e)
+            if verbose:
+                print("Failed")
+            # print(type(e))
+            # print(e)
         return True
 
     matching_network_interfaces = [n for n in network_interfaces if ssh_succeeds(n)]
