@@ -86,7 +86,8 @@ def smssh(c):
         description_array = describe_instance(c, ip)
         rows.append(description_array)
         # print("")
-    
+
+    rows = sorted(rows, key=lambda r: r[0])
     print(tabulate.tabulate(rows))
 
         # try:
