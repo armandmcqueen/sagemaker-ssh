@@ -54,8 +54,8 @@ def extract_ips(network_interfaces):
 
 def describe_instance(c, ip):
     print(ip)
-    resourceconfig = json.loads(c.run(f'ssh -o StrictHostKeyChecking=no -p 1234 root@{ip} cat /opt/ml/input/config/resourceconfig.json', hide=True))
-    hyperparams = json.loads(c.run(f'ssh -o StrictHostKeyChecking=no -p 1234 root@{ip} cat /opt/ml/input/config/resourceconfig.json', hide=True))
+    resourceconfig = json.loads(c.run(f'ssh -o StrictHostKeyChecking=no -p 1234 root@{ip} cat /opt/ml/input/config/resourceconfig.json', hide=True).stdout)
+    hyperparams = json.loads(c.run(f'ssh -o StrictHostKeyChecking=no -p 1234 root@{ip} cat /opt/ml/input/config/resourceconfig.json', hide=True).stdout)
     print(resourceconfig)
     print(hyperparams)
 
