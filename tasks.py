@@ -69,23 +69,28 @@ def describe_instance(c, ip):
     
 
 @task()
-def smssh(c, subnet, security_groups=()):
+def smssh(c, subnet, security_groups="", verbose=False):
     # subnet = "subnet-21ac2f2e"
     # security_groups = ["sg-0eaeb8cc84c955b74",
     #                    "sg-0043f63c9ad9ffc1d",
     #                    "sg-0d931ecdaccd26af3"]
+    security_groups = security_groups.split(",")
     network_interfaces = get_network_inferfaces(subnet)
     network_interfaces = filter_by_sgs(network_interfaces, security_groups)
     network_interfaces = filter_by_device_id(network_interfaces, 2)
-    # display_network_interfaces(network_interfaces)
+    if verbose:
+        print("Matching network interfaces:")
+        display_network_interfaces(network_interfaces)
 
     ips = extract_ips(network_interfaces)
     rows = []
     for ip in ips:
-        # print(f'Trying ssh to {ip}')
+        if verbose:
+            print(f'Trying ssh to {ip}')
         description_array = describe_instance(c, ip)
         rows.append(description_array)
-        # print("")
+        if verbose:
+            print("")
 
     rows = sorted(rows, key=lambda r: (r[0], r[1]))
     header = ["Job Name", "Host Id", "Hosts in Training Job", "IP"]
