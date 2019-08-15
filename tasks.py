@@ -52,7 +52,12 @@ def extract_ips(network_interfaces):
     return [n["PrivateIpAddress"] for n in network_interfaces]
 
 
-
+def describe_instance(c, ip):
+    print(ip)
+    resourceconfig = json.loads(c.run(f'ssh -p 1234 root@{ip} cat /opt/ml/input/config/resourceconfig.json', hide=True))
+    hyperparams = json.loads(c.run(f'ssh -p 1234 root@{ip} cat /opt/ml/input/config/resourceconfig.json', hide=True))
+    print(resourceconfig)
+    print(hyperparams)
 
     
 
