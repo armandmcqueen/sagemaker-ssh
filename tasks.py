@@ -55,8 +55,6 @@ def filter_by_ssh_connectivity(network_interfaces, c, port=22, verbose=False):
             if verbose:
                 print("Failed")
             return False
-            # print(type(e))
-            # print(e)
         return True
 
     matching_network_interfaces = [n for n in network_interfaces if ssh_succeeds(n)]
@@ -79,7 +77,7 @@ def extract_ips(network_interfaces):
 
 
 def describe_instance(c, ip, port):
-    # print(ip)
+
     resourceconfig = json.loads(c.run(f'ssh -o StrictHostKeyChecking=no -p {port} root@{ip} cat /opt/ml/input/config/resourceconfig.json', hide=True).stdout)
     current_host = resourceconfig["current_host"]
     all_hosts = resourceconfig["hosts"]
@@ -87,18 +85,12 @@ def describe_instance(c, ip, port):
     hyperparams = json.loads(c.run(f'ssh -o StrictHostKeyChecking=no -p {port} root@{ip} cat /opt/ml/input/config/hyperparameters.json', hide=True).stdout)
     job_name = hyperparams["sagemaker_job_name"] if "sagemaker_job_name" in hyperparams.keys() else "Unknown Job Name"
 
-    # print(resourceconfig)
-    # print(hyperparams)
     return job_name, current_host, all_hosts, ip
 
     
 
 @task()
 def smssh(c, subnet, security_groups="", port=22, verbose=False):
-    # subnet = "subnet-21ac2f2e"
-    # security_groups = ["sg-0eaeb8cc84c955b74",
-    #                    "sg-0043f63c9ad9ffc1d",
-    #                    "sg-0d931ecdaccd26af3"]
     security_groups = security_groups.split(",")
     network_interfaces = get_network_inferfaces(subnet)
     network_interfaces = filter_by_sgs(network_interfaces, security_groups)
@@ -123,8 +115,3 @@ def smssh(c, subnet, security_groups="", port=22, verbose=False):
     if verbose:
         print("")
     print(tabulate.tabulate(rows, headers=header))
-
-        # try:
-        #     c.run(f'ssh -p 1234 root@{ip} cat /opt/ml/input/config/resourceconfig.json')
-        # except Exception as e:
-        #     print("Error", e)
