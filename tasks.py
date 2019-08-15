@@ -32,7 +32,7 @@ def get_network_inferfaces(subnet):
 def filter_by_device_id(network_interfaces, device_id):
     def device_index_match(network_interface):
         print(network_interface.keys())
-        print(network_interface["Attachement"].keys())
+        print(network_interface["Attachment"].keys())
         return network_interface["Attachment"]["DeviceIndex"] == device_id
 
     matching_network_interfaces = [n for n in network_interfaces if device_index_match(n)]
