@@ -64,7 +64,7 @@ def describe_instance(c, ip):
 
     # print(resourceconfig)
     # print(hyperparams)
-    return job_name, current_host, all_hosts
+    return job_name, current_host, all_hosts, ip
 
     
 
@@ -88,7 +88,7 @@ def smssh(c):
         # print("")
 
     rows = sorted(rows, key=lambda r: (r[0], r[1]))
-    header = ["Job Name", "Host Id", "Hosts in Training Job"]
+    header = ["Job Name", "Host Id", "Hosts in Training Job", "IP"]
     print(tabulate.tabulate(rows, headers=header))
 
         # try:
