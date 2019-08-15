@@ -9,3 +9,5 @@ COPY id_rsa.pub /root/.ssh/authorized_keys
 
 COPY train.sh /usr/bin/train
 RUN chmod +x /usr/bin/train
+
+EXPOSE 1234
