@@ -102,7 +102,7 @@ def smssh(c, subnet, security_groups="", port=22, verbose=False):
     security_groups = security_groups.split(",")
     network_interfaces = get_network_inferfaces(subnet)
     network_interfaces = filter_by_sgs(network_interfaces, security_groups)
-    # network_interfaces = filter_by_device_id(network_interfaces, 2)
+    network_interfaces = filter_by_device_id(network_interfaces, 2)
     network_interfaces = filter_by_ssh_connectivity(network_interfaces, c, port=port, verbose=verbose)
     if verbose:
         print("\nMatching network interfaces:")
