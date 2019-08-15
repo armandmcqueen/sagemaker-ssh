@@ -89,7 +89,7 @@ def smssh(c):
 
     rows = sorted(rows, key=lambda r: (r[0], r[1]))
     header = ["Job Name", "Host Id", "Hosts in Training Job"]
-    print(tabulate.tabulate(rows))
+    print(tabulate.tabulate(rows, headers=header))
 
         # try:
         #     c.run(f'ssh -p 1234 root@{ip} cat /opt/ml/input/config/resourceconfig.json')
