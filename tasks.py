@@ -50,7 +50,7 @@ def filter_by_ssh_connectivity(network_interfaces, c, port=22, verbose=False):
             hide = not verbose
             c.run(f'ssh -o StrictHostKeyChecking=no -o ConnectTimeout=2 -p {port} root@{ip} hostname', hide=hide)
             if verbose:
-                print("\nSucceeded")
+                print("Succeeded")
         except Exception as e:
             if verbose:
                 print("Failed")
