@@ -119,6 +119,7 @@ def smssh(c, subnet, security_groups="", port=22, verbose=False):
 
     rows = sorted(rows, key=lambda r: (r[0], r[1]))
     header = ["Job Name", "Host Id", "Hosts in Training Job", "IP"]
+    print("")
     print(tabulate.tabulate(rows, headers=header))
 
         # try:
