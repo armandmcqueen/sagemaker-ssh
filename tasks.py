@@ -70,4 +70,5 @@ def smssh(c):
     ips = extract_ips(network_interfaces)
     for ip in ips:
         print(f'Trying ssh to {ip}')
-        c.run(f'ssh root@{ip} cat /opt/ml/input/config/resourceconfig.json')
+        try:
+            c.run(f'ssh -p 1234 root@{ip} cat /opt/ml/input/config/resourceconfig.json')
