@@ -88,6 +88,7 @@ def smssh(c):
         # print("")
 
     rows = sorted(rows, key=lambda r: (r[0], r[1]))
+    header = ["Job Name", "Host Id", "Hosts in Training Job"]
     print(tabulate.tabulate(rows))
 
         # try:
