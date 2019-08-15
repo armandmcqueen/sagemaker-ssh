@@ -77,7 +77,7 @@ def smssh(c):
     network_interfaces = get_network_inferfaces(subnet)
     network_interfaces = filter_by_sgs(network_interfaces, security_groups)
     network_interfaces = filter_by_device_id(network_interfaces, 2)
-    display_network_interfaces(network_interfaces)
+    # display_network_interfaces(network_interfaces)
 
     ips = extract_ips(network_interfaces)
     rows = []
