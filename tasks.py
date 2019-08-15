@@ -72,3 +72,5 @@ def smssh(c):
         print(f'Trying ssh to {ip}')
         try:
             c.run(f'ssh -p 1234 root@{ip} cat /opt/ml/input/config/resourceconfig.json')
+        except Exception as e:
+            print("Error", e)
